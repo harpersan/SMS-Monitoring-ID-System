@@ -16,51 +16,32 @@
 	</div>
 
 	<div class="col-sm-9">
+
 		<div class="form-group">
-			{!!Form::label('student_id', 'ID Number')!!}
-			{!!Form::text('student_id', null, ['class'=>'form-control'])!!}			
+			{!!Form::label('first_name', 'First Name')!!}
+			{!!Form::text('first_name', null, ['class'=>'form-control'])!!}			
 		</div>
 
 		<div class="form-group">
-			{!!Form::label('firstName', 'First Name')!!}
-			{!!Form::text('firstName', null, ['class'=>'form-control'])!!}			
+			{!!Form::label('last_name', 'Last Name')!!}
+			{!!Form::text('last_name', null, ['class'=>'form-control'])!!}			
 		</div>
 
 		<div class="form-group">
-			{!!Form::label('middleName', 'Middle Name')!!}
-			{!!Form::text('middleName', null, ['class'=>'form-control'])!!}			
-		</div>
-
-		<div class="form-group">
-			{!!Form::label('lastName', 'Last Name')!!}
-			{!!Form::text('lastName', null, ['class'=>'form-control'])!!}			
+			{!!Form::label('email', 'Email Address')!!}
+			{!!Form::text('email', null, ['class'=>'form-control'])!!}			
 		</div>
 
 
 		<div class="form-group">
-			{!!Form::label('grade_id', 'Year Level')!!}
-			{!!Form::select('grade_id',[''=>'Choose Option'] + $year_level, null, ['class'=>'form-control'])!!}		
+			{!!Form::label('status_id', 'Status')!!}
+			{!!Form::select('status_id',[''=>'Choose Option'] + $status, null, ['class'=>'form-control'])!!}		
 		</div>
 
 		<div class="form-group">
-			{!!Form::label('section_id', 'Section')!!}
-			{!!Form::select('section_id',[''=>'Choose Option'] + $section, null, ['class'=>'form-control'])!!}		
-		</div>
-
-		<div class="form-group">
-			{!!Form::label('guardian_name', 'Guardian Name')!!}
-			{!!Form::text('guardian_name', null, ['class'=>'form-control'])!!}			
+			{!!Form::label('password', 'Password')!!}
+			{!!Form::text('password', null, ['class'=>'form-control'])!!}			
 		</div>		
-
-		<div class="form-group">
-			{!!Form::label('mobile_number', 'Guardian Mobile#')!!}
-			{!!Form::text('mobile_number', null, ['class'=>'form-control'])!!}			
-		</div>
-
-		<div class="form-group">
-			{!!Form::label('is_active', 'Status')!!}
-			{!!Form::select('is_active', array(1=>'Active', 0=>'Not Active'), 0, ['class'=>'form-control'])!!}			
-		</div>
 
 
 		<div class="form-group">

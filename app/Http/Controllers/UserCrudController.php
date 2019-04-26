@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\AUStatus;
+use App\Photo;
+use App\Http\Requests\AdminRegistrationRequest;
 
 class UserCrudController extends Controller
 {
@@ -14,7 +18,9 @@ class UserCrudController extends Controller
     public function index()
     {
         
+        $admin = User::all();
 
+        return view('admin.adminUser.index', compact('admin'));
         
     }
 
@@ -25,7 +31,10 @@ class UserCrudController extends Controller
      */
     public function create()
     {
+
+        $status = AUStatus::pluck('name','id')->all();
         
+        return view('admin.adminUser.create', compact('status'));
 
     }
 
@@ -35,12 +44,29 @@ class UserCrudController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminRegistrationRequest $request)
     {
 
 
+        $input = $request->all();
+
+        if($file = $request->file('photo_id')) {
+
+            $name = time() . $file->getClientOriginalName();
+
+            $file->move('images', $name);
+
+            $photo = Photo::create(['image_name'=>$name]);
+
+            $input['photo_id'] = $photo->id;
+
+            $input['password'] = bcrypt($request->password);
+        }
 
 
+            User::create($input);
+
+            return redirect('/admin/dashboard');
 
     }
 
@@ -63,7 +89,9 @@ class UserCrudController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $status = Status
+
     }
 
     /**

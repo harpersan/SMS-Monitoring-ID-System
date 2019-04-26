@@ -1,104 +1,47 @@
-@extends('layouts.admin')
-
-{{-- @section('css_bootstrap')
-  <link href="{{asset('css1/blog-post.css')}}" rel="stylesheet">
-  <link href="{{asset('css1/bootstrap.css')}}" rel="stylesheet">
-  <link href="{{asset('css1/font-awesome.css')}}" rel="stylesheet">
-  <link href="{{asset('css1/metisMenu.css')}}" rel="stylesheet">
-  <link href="{{asset('css1/sb-admin-2.css')}}" rel="stylesheet">
-  <link href="{{asset('css1/styles.css')}}" rel="stylesheet">
-@endsection --}}
+@extends('layouts.admin2')
 
 @section('content')
 
+@if ($admin);
+        
+    
 
-<div class="container py-3">
-    <div class="row">
-        <div class="mx-auto col-sm-6">
-                    <!-- form user info -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="mb-0">User Information</h4>
-                        </div>
-                        <div class="card-body">
-                            <form class="form" role="form" autocomplete="off">
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">First name</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" value="Jane">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Last name</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" value="Bishop">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Email</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="email" value="email@gmail.com">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Company</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Website</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="url" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Time Zone</label>
-                                    <div class="col-lg-9">
-                                        <select id="user_time_zone" class="form-control" size="0">
-                                            <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                                            <option value="Alaska">(GMT-09:00) Alaska</option>
-                                            <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                                            <option value="Arizona">(GMT-07:00) Arizona</option>
-                                            <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                                            <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                                            <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                                            <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Username</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" value="janeuser">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Password</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="password" value="11111122333">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Confirm</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="password" value="11111122333">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label"></label>
-                                    <div class="col-lg-9">
-                                        <input type="reset" class="btn btn-secondary" value="Cancel">
-                                        <input type="button" class="btn btn-primary" value="Save Changes">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- /form user info -->
-        </div>
-    </div>
-</div>
+    <table class="table table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Photo</th>
+      <th scope="col">ID#</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Status</th>
+
+    </tr>
+  </thead>
+
+    @foreach ($admin as $admin_user)
+      <tbody>
+        <tr>
+          <td>
+            <a href="{{ route('user.edit', $admin_user->id) }}">
+                <img height="50" width="50" src="{{$admin_user->admin ? $admin_user->admin->image_name : 
+                    'http://placehold.it/400x400'}}">
+            </a>
+          </td>
+          <td>{{ $admin_user->id }}</td>
+          <td>{{ $admin_user->first_name }}</td>
+          <td>{{ $admin_user->last_name }}</td>
+          <td>{{ $admin_user->email }}</td>
+          <td>{{ $admin_user->status->name }}</td>
+
+        </tr>
+    @endforeach
+
+
+</table>
+
+@endif
 
 
 @endsection
+

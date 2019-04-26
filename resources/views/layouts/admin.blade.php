@@ -146,11 +146,11 @@
                         <a href="#"><i class="fa fa-wrench fa-fw"></i>Administrator<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="">+ Admin User</a>
+                                <a href="{{ route('user.create') }}">+ Admin User</a>
                             </li>
 
                             <li>
-                                <a href="">View Admin User</a>
+                                <a href="{{ route('user.index') }}">View Admin User</a>
                             </li>
 
                         </ul>
