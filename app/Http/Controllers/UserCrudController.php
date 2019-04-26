@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\AdminRegistrationRequest;
 use App\User;
 use App\AUStatus;
 use App\Photo;
-use App\Http\Requests\AdminRegistrationRequest;
+
+
 
 class UserCrudController extends Controller
 {
@@ -90,7 +92,11 @@ class UserCrudController extends Controller
     public function edit($id)
     {
         
-        $status = Status
+        $status = AUStatus::pluck('name','id')->all();
+
+        $user = User::findOrFail($id);
+
+        return view('admin.adminUser.edit', compact('status', 'user'));
 
     }
 
