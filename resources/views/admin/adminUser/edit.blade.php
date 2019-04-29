@@ -52,7 +52,7 @@
 		{!! Form::close() !!}
 
 
-		{!! Form::open(['method'=>'DELETE', 'action'=>['StudentCrudController@destroy', $user->id]]) !!}
+		{!! Form::open(['method'=>'DELETE', 'action'=>['UserCrudController@destroy', $user->id]]) !!}
 		@csrf
 
 		<div class="form-group">

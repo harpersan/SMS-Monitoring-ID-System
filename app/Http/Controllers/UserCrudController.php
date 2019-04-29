@@ -109,7 +109,38 @@ class UserCrudController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+    if (trim($request->password == "")) {
+
+        $input = $request->except('password');
+            
+    } else {
+
+          $input = $request->all();
+
+          $input['password'] = bcrypt($request->password);
+    }
+
+        
+        if($file = $request->file('photo_id')) {
+
+            $name = time() . $file->getClientOriginalName();
+
+            $file->move('images', $name);
+
+            $photo = Photo::create(['image_name'=>$name]);
+
+            $input['photo_id'] = $photo->id;
+
+            
+        }
+
+
+            User::whereId($id)->first()->update($input);
+
+            return redirect('/admin/dashboard');
+
+
     }
 
     /**
@@ -120,6 +151,20 @@ class UserCrudController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        if($user->admin) {
+
+            unlink(public_path() . $user->admin->image_name);
+
+            $user->delete();
+
+            return redirect('/admin/dashboard');
+        }else 
+
+            $user->delete();
+
+            return redirect('/admin/dashboard');
+
     }
 }
