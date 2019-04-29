@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'photo_id', 'status_id', 'first_name', 'last_name', 'email', 'password',
+        'photo_id', 'status_id', 'first_name', 'last_name', 'email', 'password', 'role_id' 
     ];
 
     /**
@@ -46,6 +46,24 @@ class User extends Authenticatable
     public function status() {
 
         return $this->belongsTo('App\AUStatus');
+    }
+
+     public function role() {
+
+        return $this->belongsTo('App\Role');
+    }   
+
+
+    public function isAdmin(){
+
+        if($this->status_id == 1 && $this->role->name == 'ADMINISTRATOR') {
+
+            return true;
+
+        } else 
+
+            return false;
+        
     }
 
 }

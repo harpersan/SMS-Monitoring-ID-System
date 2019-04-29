@@ -7,7 +7,7 @@ use App\Http\Requests\AdminRegistrationRequest;
 use App\User;
 use App\AUStatus;
 use App\Photo;
-
+use App\Role;
 
 
 class UserCrudController extends Controller
@@ -35,8 +35,9 @@ class UserCrudController extends Controller
     {
 
         $status = AUStatus::pluck('name','id')->all();
+        $role = Role::pluck('name','id')->all();
         
-        return view('admin.adminUser.create', compact('status'));
+        return view('admin.adminUser.create', compact('status', 'role'));
 
     }
 

@@ -39,6 +39,11 @@
 		</div>
 
 		<div class="form-group">
+			{!!Form::label('role_id', 'Authority')!!}
+			{!!Form::select('status_id',[''=>'Choose Option'] + $role, null, ['class'=>'form-control'])!!}		
+		</div>
+
+		<div class="form-group">
 			{!!Form::label('password', 'Password')!!}
 			{!!Form::text('password', null, ['class'=>'form-control'])!!}			
 		</div>		

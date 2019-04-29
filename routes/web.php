@@ -11,19 +11,28 @@
 |
 */
 
-Route::get('/', function () {
-    return view('admin/dashboard/index');
-});
+
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/admin/dashboard', 'DashBoardController');
 
-Route::resource('/admin/student', 'StudentCrudController');
 
-Route::resource('/admin/index', 'MessageLogsController');
+Route::group(['middleware'=>'admin'], function(){
 
-Route::resource('/admin/user', 'UserCrudController');
+	Route::get('/', function () {
+    return view('admin/dashboard/index');
+	});
 
+	Route::resource('/admin/dashboard', 'DashBoardController');
+
+	Route::resource('/admin/student', 'StudentCrudController');
+
+	Route::resource('/admin/index', 'MessageLogsController');
+
+	Route::resource('/admin/user', 'UserCrudController');
+
+	Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
+});

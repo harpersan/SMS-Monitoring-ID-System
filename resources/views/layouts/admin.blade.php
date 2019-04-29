@@ -71,7 +71,7 @@
                     <i class="fa fa-user fa-fw"></i> 
 
                     @if (Auth::check())
-                        {{ Auth::user()->name }}
+                        {{ Auth::user()->first_name}}
 
                     @else 
                         {{""}}    
@@ -85,7 +85,7 @@
                     <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                     </li>
                     <li class="divider"></li>
-                    <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
