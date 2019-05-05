@@ -17,11 +17,12 @@
 		</div>
 	</div>
 
-	<div class="col-sm-6">
-		<div class="container" >	
+
 		
 		@if ($student_logs)
-			
+		
+	<div class="col-sm-6">
+		<div class="container" >				
 			@foreach ($student_logs as $current_student)
 				<img height="450" width="450" src="{{$current_student->photo ? $current_student->photo->image_name : 
 				'http://placehold.it/400x400'}}">

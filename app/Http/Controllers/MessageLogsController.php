@@ -51,14 +51,16 @@ class MessageLogsController extends Controller
 
         $student_id = '';  // set an empty variable to get the value inside for each loop      
         $photo = '';       // set an empty variable to get the value inside for each loop     
+        $mobile_number ='';// set student guardian cellphone number to get the value inside for each loop 
+        $student_name = '';// set student name to get the value inside for each loop 
 
-
-        // loop through student table to get the student_id $ photo_id //
         foreach ($student as $value) {
            
             $student_id = $value->student_id;
             $photo = $value->photo_id;
-  
+            $student_name = $value->firstName. ' ' .$value->middleName. ' ' .$value->lastName;
+            $mobile_number = $value->mobile_number;
+
         }
 
         ##################################################################
@@ -72,16 +74,40 @@ class MessageLogsController extends Controller
                 $login_date = ''; // set an empty variable to get the value inside for each loop
                 $logout_date = '';// set an empty variable to get the value inside for each loop
                 $login_time = ''; // set an empty variable to get the value inside for each loop
+                $login_DT = '';
 
                 // loop through logs table to get the login date, logintime, logout date //
 
-                foreach ($logs as $log) {
-                    
-                    $login_date = $log->login_date;
-                    $logout_date = $log->logout_date;
-                    $login_time = $log->created_at;
-                    
-                }
+                    foreach ($logs as $log) {
+                        
+                        $login_date = $log->login_date;
+                        $logout_date = $log->logout_date;
+                        $login_time = $log->created_at;
+
+                        $login_DT = $log->login_time . ' ' . $log->login_date;
+
+
+                        
+                    }
+
+                        //##########################################################################
+                        // ITEXMO SEND SMS API - PHP - CURL-LESS METHOD
+                        // Visit www.itexmo.com/developers.php for more info about this API
+                        //##########################################################################
+                        function itexmo($number,$message,$apicode){
+                        $url = 'https://www.itexmo.com/php_api/api.php';
+                        $itexmo = array('1' => $number, '2' => $message, '3' => $apicode);
+                        $param = array(
+                            'http' => array(
+                                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                                'method'  => 'POST',
+                                'content' => http_build_query($itexmo),
+                            ),
+                        );
+                        $context  = stream_context_create($param);
+                        return file_get_contents($url, false, $context);}
+                        //##########################################################################
+
 
                 $dt = Carbon::now(); // to get the current date and time //
                                      // toDateString() to get only the Date // 
@@ -99,7 +125,25 @@ class MessageLogsController extends Controller
 
                         $input['login_time'] = Carbon::now();
 
-                        Log::create($input);
+                        $logs = Log::create($input);
+
+                            $number = $mobile_number;
+                            $message = $student_name.' '.'Enter the School premises at'.', '.$logs->login_time;
+                            $apicode = "TR-TOMGE416390_6AV2X";
+
+                        ###################################################################
+                            $result = itexmo($number,$message,$apicode);
+                            if ($result == ""){
+                            echo "iTexMo: No response from server!!!
+                            Please check the METHOD used (CURL or CURL-LESS). If you are using CURL then try CURL-LESS and vice versa.  
+                            Please CONTACT US for help. ";  
+                            }else if ($result == 0){
+                            echo "Message Sent!";
+                            }
+                            else{   
+                            echo "Error Num ". $result . " was encountered!";
+                            }
+                        ##################################################################        
 
                         return redirect('/admin/index');
 
@@ -115,6 +159,23 @@ class MessageLogsController extends Controller
                             WHERE student_id = $request->student_id
                             ORDER BY id DESC LIMIT 1");
 
+                            $number = $mobile_number;
+                            $message = $student_name.' '.'Leave the School premises at'.', '.$dt;
+                            $apicode = "TR-TOMGE416390_6AV2X";
+
+                        ###################################################################
+                            $result = itexmo($number,$message,$apicode);
+                            if ($result == ""){
+                            echo "iTexMo: No response from server!!!
+                            Please check the METHOD used (CURL or CURL-LESS). If you are using CURL then try CURL-LESS and vice versa.  
+                            Please CONTACT US for help. ";  
+                            }else if ($result == 0){
+                            echo "Message Sent!";
+                            }
+                            else{   
+                            echo "Error Num ". $result . " was encountered!";
+                            }
+                        ##################################################################                        
                         return redirect('/admin/index');
                        
                     } else {
